@@ -9,10 +9,41 @@ namespace BasicLibrary
         // testing chuckout
         static void Main(string[] args)
         {
+            // downloaded form Alanoud device 
+                bool ExitFlag = false;
 
-        }
+                LoadBooksFromFile();
 
-        static void AdminMenu()
+                do
+                {
+                    Console.WriteLine("Choose 1 for admin Or 2 for user Or 3 for Save & Exit:");
+                    string choice = Console.ReadLine();
+                    switch (choice)
+                    {
+
+                        case "1":
+                            AdminMenu();
+                            break;
+
+                        case "2":
+                            UserMenu();
+                            break;
+
+                        case "3":
+                            SaveBooksToFile();
+                            ExitFlag = true;
+                            break;
+
+                        default:
+                            Console.WriteLine("enter correct choice");
+                            break;
+                    }
+                } while (ExitFlag != true);
+
+
+            }
+
+            static void AdminMenu()
         {
             bool ExitFlag = false;
 
