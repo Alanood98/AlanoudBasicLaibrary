@@ -117,11 +117,11 @@ namespace BasicLibrary
                         break;
 
                     case "B":
-                        // BorrowBook();
+                        BorrowBook();
                         break;
 
                     case "C":
-                        //ReturnBook();
+                        ReturnBook();
                         break;
 
                     case "D":
@@ -145,8 +145,6 @@ namespace BasicLibrary
 
 
         }
-
-
 
 
         static void AddnNewBook()
@@ -207,6 +205,13 @@ namespace BasicLibrary
 
             if (flag != true)
             { Console.WriteLine("book not found"); }
+        }
+
+        static void BorrowBook() { 
+        }
+
+        static void ReturnBook()
+        {
         }
 
         static void LoadBooksFromFile()
