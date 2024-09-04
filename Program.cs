@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using static System.Reflection.Metadata.BlobBuilder;
 
 namespace BasicLibrary
 {
@@ -207,11 +208,46 @@ namespace BasicLibrary
             { Console.WriteLine("book not found"); }
         }
 
-        static void BorrowBook() { 
+        static void BorrowBook() {
+            Console.WriteLine("Enter the name of the book you want to borrow:");
+            string bookName = Console.ReadLine();
+
+            for (int i = 0; i < Books.Count; i++)
+            {
+                if (Books[i].Item1.Equals(bookName, StringComparison.OrdinalIgnoreCase))
+                {
+                    if (Books[i].Item3 > 0) // Check if the book is available
+                    {
+                        int x = Books[i].Item3 - 1; // Subtract one from the available books
+                        Books = (Books[i].BName, Books[i].BAuthor, Books[i].x, Books[i].quantity);
+                        Console.WriteLine($"You have successfully borrowed '{bookName}'.");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Sorry, this book is currently unavailable.");
+                    }
+                    return;
+                }
+            }
+            Console.WriteLine("Book not found.");
         }
 
         static void ReturnBook()
         {
+            Console.WriteLine("Enter the name of the book you want to return:");
+            string bookName = Console.ReadLine();
+
+            for (int i = 0; i < Books.Count; i++)
+            {
+                if (Books[i].Item1.Equals(bookName, StringComparison.OrdinalIgnoreCase))
+                {
+                   int y = Books[i].Item3+1; // Increase the number of available books
+                   Books = (Books[i].BName, Books[i].BAuthor, Books[i].y, Books[i].quantity);
+                    Console.WriteLine($"You have successfully returned '{bookName}'.");
+                    return;
+                }
+            }
+            Console.WriteLine("Book not found.");
         }
 
         static void LoadBooksFromFile()
@@ -225,7 +261,7 @@ namespace BasicLibrary
                         string line;
                         while ((line = reader.ReadLine()) != null)
                         {
-                            var parts = line.Split('|');
+                            var parts = line.Split(',');
                             if (parts.Length == 4)
                             {
                                 Books.Add((parts[0], parts[1], int.Parse(parts[2]), int.Parse(parts[3])));
