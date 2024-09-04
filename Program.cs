@@ -122,7 +122,7 @@ namespace BasicLibrary
                         break;
 
                     case "C":
-                        ReturnBook();
+                        ReturnBooks();
                         break;
 
                     case "D":
@@ -159,7 +159,7 @@ namespace BasicLibrary
             Console.WriteLine("Enter Book ID");
             int ID = int.Parse(Console.ReadLine());
 
-            Console.WriteLine("Enter Book ID");
+            Console.WriteLine("Enter Book quantity");
             int qnt = int.Parse(Console.ReadLine());
 
             Books.Add((name, author, ID, qnt));
@@ -210,31 +210,46 @@ namespace BasicLibrary
             { Console.WriteLine("book not found"); }
         }
 
-        static void BorrowBook() {
-            Console.WriteLine("Enter the name of the book you want to borrow:");
+        static void BorrowBook()
+        {
+            Console.WriteLine("Enter the name of the book you want to BORROW:");
             string bookName = Console.ReadLine();
+            Console.WriteLine("Enter the book name you want");
+            string name = Console.ReadLine();
+            bool flag = false;
 
             for (int i = 0; i < Books.Count; i++)
             {
-                if (Books[i].Item1.Equals(bookName, StringComparison.OrdinalIgnoreCase))
+                if (Books[i].BName == name)
                 {
-                    if (Books[i].Item3 > 0) // Check if the book is available
-                    {
-                        int x = Books[i].Item3 - 1; // Subtract one from the available books
-                        Books = (Books[i].BName, Books[i].BAuthor, Books[i].x, Books[i].quantity);
-                        Console.WriteLine($"You have successfully borrowed '{bookName}'.");
-                    }
-                    else
-                    {
-                        Console.WriteLine("Sorry, this book is currently unavailable.");
-                    }
+                    Console.WriteLine("Book Author is : " + Books[i].BAuthor);
+                    Console.WriteLine("how manay book you want:");
+                    int qu = int.Parse(Console.ReadLine());
+                    int x = Books[i].quantity - qu; // Increase the number of available books
+                    Books[i] = (Books[i].BName, Books[i].BAuthor, Books[i].ID, x);
+                    Console.WriteLine($"You have successfully returned '{bookName}'.");
                     return;
+                    flag = true;
+                    break;
                 }
             }
-            Console.WriteLine("Book not found.");
+        //    for (int i = 0; i < Books.Count; i++)
+        //    {
+        //        if (Books[i].quantity!=0)
+        //        {
+        //            Console.WriteLine("how manay book you want:");
+        //            int qu =int.Parse(Console.ReadLine());
+        //            int x = Books[i].quantity - qu; // Increase the number of available books
+        //            Books[i] = (Books[i].BName, Books[i].BAuthor, Books[i].ID, x);
+        //            Console.WriteLine($"You have successfully returned '{bookName}'.");
+        //            return;
+        //        }
+        //      //  .Equals(bookName, StringComparison.OrdinalIgnoreCase)
+        //    }
+        //    Console.WriteLine("Book not found.");
         }
 
-        static void ReturnBook()
+        static void ReturnBooks()
         {
             Console.WriteLine("Enter the name of the book you want to return:");
             string bookName = Console.ReadLine();
@@ -243,8 +258,8 @@ namespace BasicLibrary
             {
                 if (Books[i].Item1.Equals(bookName, StringComparison.OrdinalIgnoreCase))
                 {
-                   int y = Books[i].Item3+1; // Increase the number of available books
-                   Books = (Books[i].BName, Books[i].BAuthor, Books[i].y, Books[i].quantity);
+                   int y = Books[i].quantity+1; // Increase the number of available books
+                        Books[i] = (Books[i].BName, Books[i].BAuthor, Books[i].ID , y);
                     Console.WriteLine($"You have successfully returned '{bookName}'.");
                     return;
                 }
