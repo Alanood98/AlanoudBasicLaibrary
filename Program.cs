@@ -182,6 +182,8 @@ namespace BasicLibrary
                 sb.AppendLine();
                 sb.Append("Book ").Append(BookNumber).Append(" ID : ").Append(Books[i].ID);
                 sb.AppendLine().AppendLine();
+                sb.Append("Book ").Append(BookNumber).Append(" Quantity : ").Append(Books[i].quantity);
+                sb.AppendLine().AppendLine();
                 Console.WriteLine(sb.ToString());
                 sb.Clear();
 
