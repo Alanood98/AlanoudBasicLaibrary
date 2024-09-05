@@ -5,11 +5,14 @@ namespace BasicLibrary
 {
     internal class Program
     {
-        static List<(string BName, string BAuthor, int ID , int quantity)> Books = new List<(string BName, string BAuthor, int ID , int quntity)>();
+        static List<(string BName, string BAuthor, int BID , int quantity)> Books = new List<(string BName, string BAuthor, int BID , int quntity)>();
+        static List<(string AdEmail,  int password)> admin = new List<(string AdEmail, int password)>();
+        static List<(string UrEmail, int password , int UrId)> user = new List<(string UrEmail, int password , int UrId)>();
+        static List<(int UrId ,  int BID)> borrowing = new List<(int Id , int BID)>();
         static string filePath = "C:\\Users\\Codeline User\\Desktop\\lib.txt";
         static string UserPath = "C:\\Users\\Codeline User\\Desktop\\Admin.txt";
         static string AdminPath = "C:\\Users\\Codeline User\\Desktop\\User.txt";
-        static string AdminPath = "C:\\Users\\Codeline User\\Desktop\\Borrowing.txt";
+        static string BorrowingPath = "C:\\Users\\Codeline User\\Desktop\\Borrowing.txt";
         // testing chuckout
         static void Main(string[] args)
         {
