@@ -331,7 +331,7 @@ namespace BasicLibrary
                     Console.WriteLine("Edit the book Author name:  ");
                     string NewAuthor = Console.ReadLine();
 
-                    Console.WriteLine("How many books you want to add or remove (use negative value to remove):");
+                    Console.WriteLine("Enter how many books you want:");
                     int qu = int.Parse(Console.ReadLine()); // Quantity user wants to modify
                     int newQuantity = Books[i].quantity + qu; // Modify the current quantity
 
