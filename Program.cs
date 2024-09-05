@@ -10,8 +10,8 @@ namespace BasicLibrary
         static List<(string UrEmail, int password , int UrId)> user = new List<(string UrEmail, int password , int UrId)>();
         static List<(int UrId ,  int BID)> borrowing = new List<(int Id , int BID)>();
         static string filePath = "C:\\Users\\Codeline User\\Desktop\\lib.txt";
-        static string UserPath = "C:\\Users\\Codeline User\\Desktop\\Admin.txt";
-        static string AdminPath = "C:\\Users\\Codeline User\\Desktop\\User.txt";
+        static string AdminPath = "C:\\Users\\Codeline User\\Desktop\\Admin.txt";
+        static string UserPath = "C:\\Users\\Codeline User\\Desktop\\User.txt";
         static string BorrowingPath = "C:\\Users\\Codeline User\\Desktop\\Borrowing.txt";
         // testing chuckout
         static void Main(string[] args)
@@ -190,7 +190,7 @@ namespace BasicLibrary
                 sb.AppendLine();
                 sb.Append("Book ").Append(BookNumber).Append(" Author : ").Append(Books[i].BAuthor);
                 sb.AppendLine();
-                sb.Append("Book ").Append(BookNumber).Append(" ID : ").Append(Books[i].ID);
+                sb.Append("Book ").Append(BookNumber).Append(" ID : ").Append(Books[i].BID);
                 sb.AppendLine().AppendLine();
                 sb.Append("Book ").Append(BookNumber).Append(" Quantity : ").Append(Books[i].quantity);
                 sb.AppendLine().AppendLine();
@@ -235,7 +235,7 @@ namespace BasicLibrary
                     Console.WriteLine("how manay book you want:");
                     int qu = int.Parse(Console.ReadLine());
                     int x = Books[i].quantity - qu;
-                    Books[i] = (Books[i].BName, Books[i].BAuthor, Books[i].ID, x);
+                    Books[i] = (Books[i].BName, Books[i].BAuthor, Books[i].BID, x);
                     Console.WriteLine($"You have successfully borrowed '{name}'.");
                     return;
                     flag = true;
@@ -269,7 +269,7 @@ namespace BasicLibrary
                 if (Books[i].BName == name)
                 {
                     int y = Books[i].quantity + 1; // Increase the number of available books
-                    Books[i] = (Books[i].BName, Books[i].BAuthor, Books[i].ID, y);
+                    Books[i] = (Books[i].BName, Books[i].BAuthor, Books[i].BID, y);
                     Console.WriteLine($"You have successfully returned '{name}'.");
                     return;
                 }
@@ -277,7 +277,8 @@ namespace BasicLibrary
             Console.WriteLine("Book not found.");
         }
 
-        static void LoadBooksFromFile()
+        static void LoadBooksFromLibFile()
+        
         {
             try
             {
@@ -304,6 +305,94 @@ namespace BasicLibrary
             }
         }
 
+       static void LoadBooksFromAdminFile()
+        {
+            try
+            {
+                if (File.Exists(AdminPath))
+                {
+                    using (StreamReader reader = new StreamReader(AdminPath))
+                    {
+                        string line;
+                        while ((line = reader.ReadLine()) != null)
+                        {
+                            var parts = line.Split(',');
+                            if (parts.Length == 4)
+                            {
+                                Books.Add((parts[0], parts[1], int.Parse(parts[2]), int.Parse(parts[3])));
+                            }
+                        }
+                    }
+                    Console.WriteLine("Books loaded from file successfully.");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error loading from file: {ex.Message}");
+            }
+
+        }
+
+       static void LoadBooksFromUserFile()
+        {
+            try
+            {
+                if (File.Exists(UserPath))
+                {
+                    using (StreamReader reader = new StreamReader(UserPath))
+                    {
+                        string line;
+                        while ((line = reader.ReadLine()) != null)
+                        {
+                            var parts = line.Split(',');
+                            if (parts.Length == 4)
+                            {
+                                Books.Add((parts[0], parts[1], int.Parse(parts[2]), int.Parse(parts[3])));
+                            }
+                        }
+                    }
+                    Console.WriteLine("Books loaded from file successfully.");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error loading from file: {ex.Message}");
+            }
+
+
+        }
+
+       static void LoadBooksFromBorrowingFile()
+        {
+            try
+            {
+                if (File.Exists(BorrowingPath))
+                {
+                    using (StreamReader reader = new StreamReader(BorrowingPath))
+                    {
+                        string line;
+                        while ((line = reader.ReadLine()) != null)
+                        {
+                            var parts = line.Split(',');
+                            if (parts.Length == 4)
+                            {
+                                Books.Add((parts[0], parts[1], int.Parse(parts[2]), int.Parse(parts[3])));
+                            }
+                        }
+                    }
+                    Console.WriteLine("Books loaded from file successfully.");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error loading from file: {ex.Message}");
+            }
+
+
+        }
+
+
+
         static void SaveBooksToFile()
         {
             try
@@ -312,7 +401,7 @@ namespace BasicLibrary
                 {
                     foreach (var book in Books)
                     {
-                        writer.WriteLine($"{book.BName}|{book.BAuthor}|{book.ID}");
+                        writer.WriteLine($"{book.BName}|{book.BAuthor}|{book.BID}");
                     }
                 }
                 Console.WriteLine("Books saved to file successfully.");
