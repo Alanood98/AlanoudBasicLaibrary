@@ -6,7 +6,7 @@ namespace BasicLibrary
     internal class Program
     {
         static List<(string BName, string BAuthor, int ID , int quantity)> Books = new List<(string BName, string BAuthor, int ID , int quntity)>();
-        static string filePath = "C:\\Users\\Codeline User\\Desktop\\Alanoud\\lib.txt";
+        static string filePath = "C:\\Users\\Codeline User\\Desktop\\lib.txt";
         // testing chuckout
         static void Main(string[] args)
         {
@@ -210,11 +210,10 @@ namespace BasicLibrary
             { Console.WriteLine("book not found"); }
         }
 
+
         static void BorrowBook()
         {
-            Console.WriteLine("Enter the name of the book you want to BORROW:");
-            string bookName = Console.ReadLine();
-            Console.WriteLine("Enter the book name you want");
+            Console.WriteLine("Enter the name of the book you want to borrow:");
             string name = Console.ReadLine();
             bool flag = false;
 
@@ -225,42 +224,43 @@ namespace BasicLibrary
                     Console.WriteLine("Book Author is : " + Books[i].BAuthor);
                     Console.WriteLine("how manay book you want:");
                     int qu = int.Parse(Console.ReadLine());
-                    int x = Books[i].quantity - qu; // Increase the number of available books
+                    int x = Books[i].quantity - qu;
                     Books[i] = (Books[i].BName, Books[i].BAuthor, Books[i].ID, x);
-                    Console.WriteLine($"You have successfully returned '{bookName}'.");
+                    Console.WriteLine($"You have successfully borrowed '{name}'.");
                     return;
                     flag = true;
                     break;
                 }
             }
-        //    for (int i = 0; i < Books.Count; i++)
-        //    {
-        //        if (Books[i].quantity!=0)
-        //        {
-        //            Console.WriteLine("how manay book you want:");
-        //            int qu =int.Parse(Console.ReadLine());
-        //            int x = Books[i].quantity - qu; // Increase the number of available books
-        //            Books[i] = (Books[i].BName, Books[i].BAuthor, Books[i].ID, x);
-        //            Console.WriteLine($"You have successfully returned '{bookName}'.");
-        //            return;
-        //        }
-        //      //  .Equals(bookName, StringComparison.OrdinalIgnoreCase)
-        //    }
-        //    Console.WriteLine("Book not found.");
+            //    for (int i = 0; i < Books.Count; i++)
+            //    {
+            //        if (Books[i].quantity!=0)
+            //        {
+            //            Console.WriteLine("how manay book you want:");
+            //            int qu =int.Parse(Console.ReadLine());
+            //            int x = Books[i].quantity - qu; // Increase the number of available books
+            //            Books[i] = (Books[i].BName, Books[i].BAuthor, Books[i].ID, x);
+            //            Console.WriteLine($"You have successfully returned '{bookName}'.");
+            //            return;
+            //        }
+            //      //  .Equals(bookName, StringComparison.OrdinalIgnoreCase)
+            //    }
+            //    Console.WriteLine("Book not found.");
         }
 
         static void ReturnBooks()
         {
             Console.WriteLine("Enter the name of the book you want to return:");
-            string bookName = Console.ReadLine();
+            string name = Console.ReadLine();
+            bool flag = false;
 
             for (int i = 0; i < Books.Count; i++)
             {
-                if (Books[i].Item1.Equals(bookName, StringComparison.OrdinalIgnoreCase))
+                if (Books[i].BName == name)
                 {
-                   int y = Books[i].quantity+1; // Increase the number of available books
-                        Books[i] = (Books[i].BName, Books[i].BAuthor, Books[i].ID , y);
-                    Console.WriteLine($"You have successfully returned '{bookName}'.");
+                    int y = Books[i].quantity + 1; // Increase the number of available books
+                    Books[i] = (Books[i].BName, Books[i].BAuthor, Books[i].ID, y);
+                    Console.WriteLine($"You have successfully returned '{name}'.");
                     return;
                 }
             }
