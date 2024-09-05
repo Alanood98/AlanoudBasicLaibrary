@@ -27,7 +27,7 @@ namespace BasicLibrary
 
             do
                 {
-                    Console.WriteLine("Choose 1 for admin Or 2 for user Or 3 for Save & Exit:");
+                    Console.WriteLine("Choose 1 for Registration Or 2 for Admin Or 3 for  User  or 4 for log out:");
                     string choice = Console.ReadLine();
                     switch (choice)
                     {
@@ -53,6 +53,13 @@ namespace BasicLibrary
 
 
             }
+
+
+        static void Registration()
+        {
+
+
+        }
 
             static void AdminMenu()
         {
