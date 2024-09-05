@@ -63,11 +63,90 @@ namespace BasicLibrary
         static void Login()
         {
             bool ExitFlag = false;
+            Console.WriteLine("Are you Admin or User?");
+            string loginPerson = Console.ReadLine().ToLower();
 
-           
-    }
-            
-            static void AdminMenu()
+            Console.WriteLine("Enter your email:");
+            string email = Console.ReadLine();
+            Console.WriteLine("Enter your password:");
+            string password = Console.ReadLine();
+
+            if (loginPerson == "user")
+            {
+                if (CheckLoginUser(UserPath, email, password))
+                {
+                    Console.WriteLine("Login successful as User.");
+                    UserMenu();
+                }
+                else
+                {
+                    Console.WriteLine("User not registered or incorrect credentials.");
+                }
+            }
+            else if (loginPerson == "admin")
+            {
+                if (CheckLoginAdmin(AdminPath, email, password))
+                {
+                    Console.WriteLine("Login successful as Admin.");
+                    AdminMenu();
+                }
+                else
+                {
+                    Console.WriteLine("Admin not registered or incorrect credentials.");
+                }
+            }
+            else
+            {
+                Console.WriteLine("Invalid input. Please enter 'admin' or 'user'.");
+                Console.Clear();
+            }
+        }
+
+        // Function to check user login credentials from file
+        static bool CheckLoginUser(string UserPath, string email, string password)
+        {
+            if (File.Exists(UserPath))
+            {
+                using (StreamReader reader = new StreamReader(UserPath))
+                {
+                    string line;
+                    while ((line = reader.ReadLine()) != null)
+                    {
+                        var data = line.Split(',');
+                        if (data[0] == email && data[1] == password)
+                        {
+                            return true;
+                        }
+                    }
+                }
+            }
+            return false;
+        }
+
+        // Function to check admin login credentials from file
+        static bool CheckLoginAdmin(string AdminPath, string email, string password)
+        {
+            if (File.Exists(AdminPath))
+            {
+                using (StreamReader reader = new StreamReader(AdminPath))
+                {
+                    string line;
+                    while ((line = reader.ReadLine()) != null)
+                    {
+                        var data = line.Split(',');
+                        if (data[0] == email && data[1] == password)
+                        {
+                            return true;
+                        }
+                    }
+                }
+            }
+            return false;
+        }
+
+
+
+        static void AdminMenu()
         {
             bool ExitFlag = false;
 
