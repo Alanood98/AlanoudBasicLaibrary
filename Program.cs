@@ -1,14 +1,15 @@
-﻿using System.Text;
+﻿using System;
+using System.Text;
 using static System.Reflection.Metadata.BlobBuilder;
 
 namespace BasicLibrary
 {
     internal class Program
     {
-        static List<(string BName, string BAuthor, int BID , int quantity)> Books = new List<(string BName, string BAuthor, int BID , int quntity)>();
-        static List<(string AdEmail,  int password)> admin = new List<(string AdEmail, int password)>();
-        static List<(string UrEmail, int password , int UrId)> user = new List<(string UrEmail, int password , int UrId)>();
-        static List<(int UrId ,  int BID)> borrowing = new List<(int Id , int BID)>();
+        static List<(string BName, string BAuthor, int BID, int quantity)> Books = new List<(string BName, string BAuthor, int BID, int quntity)>();
+        static List<(string AdEmail, int password)> admin = new List<(string AdEmail, int password)>();
+        static List<(string UrEmail, int password, int UrId)> user = new List<(string UrEmail, int password, int UrId)>();
+        static List<(int UrId, int BID)> borrowing = new List<(int Id, int BID)>();
         static string filePath = "C:\\Users\\Codeline User\\Desktop\\lib.txt";
         static string AdminPath = "C:\\Users\\Codeline User\\Desktop\\Admin.txt";
         static string UserPath = "C:\\Users\\Codeline User\\Desktop\\User.txt";
@@ -17,50 +18,55 @@ namespace BasicLibrary
         static void Main(string[] args)
         {
             // downloaded form Alanoud device 
-                bool ExitFlag = false;
+            bool ExitFlag = false;
 
-                LoadBooksFromLibFile();
-                LoadBooksFromAdminFile(); 
-                LoadBooksFromUserFile();
-                LoadBooksFromBorrowingFile();
+            LoadBooksFromLibFile();
+            LoadBooksFromAdminFile();
+            LoadBooksFromUserFile();
+            LoadBooksFromBorrowingFile();
 
 
             do
+            {
+                Console.WriteLine("Choose 1 for Registration Or 2 for Admin Or 3 for  User  or 4 for log out:");
+                string choice = Console.ReadLine();
+                switch (choice)
                 {
-                    Console.WriteLine("Choose 1 for Registration Or 2 for Admin Or 3 for  User  or 4 for log out:");
-                    string choice = Console.ReadLine();
-                    switch (choice)
-                    {
 
-                        case "1":
-                            AdminMenu();
-                            break;
+                    case "1":
+                        Login();
+                        break;
 
-                        case "2":
-                            UserMenu();
-                            break;
+                    case "2":
+                        AdminMenu();
+                        break;
 
-                        case "3":
-                            SaveBooksToFile();
-                            ExitFlag = true;
-                            break;
+                    case "3":
+                        UserMenu();
+                        break;
 
-                        default:
-                            Console.WriteLine("enter correct choice");
-                            break;
-                    }
-                } while (ExitFlag != true);
+                    case "4":
+                        SaveBooksToFile();
+                        ExitFlag = true;
+                        break;
 
-
-            }
-
-
-        static void Registration()
-        {
+                    default:
+                        Console.WriteLine("enter correct choice");
+                        break;
+                }
+            } while (ExitFlag != true);
 
 
         }
 
+
+        static void Login()
+        {
+            bool ExitFlag = false;
+
+           
+    }
+            
             static void AdminMenu()
         {
             bool ExitFlag = false;
