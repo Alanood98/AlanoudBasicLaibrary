@@ -19,9 +19,13 @@ namespace BasicLibrary
             // downloaded form Alanoud device 
                 bool ExitFlag = false;
 
-                LoadBooksFromFile();
+                LoadBooksFromLibFile();
+                LoadBooksFromAdminFile(); 
+                LoadBooksFromUserFile();
+                LoadBooksFromBorrowingFile();
 
-                do
+
+            do
                 {
                     Console.WriteLine("Choose 1 for admin Or 2 for user Or 3 for Save & Exit:");
                     string choice = Console.ReadLine();
