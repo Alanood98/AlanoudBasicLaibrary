@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text;
+using System.Xml.Linq;
 using static System.Reflection.Metadata.BlobBuilder;
 
 namespace BasicLibrary
@@ -28,7 +29,7 @@ namespace BasicLibrary
 
             do
             {
-                Console.WriteLine("Choose 1 for Registration Or 2 for Admin Or 3 for  User  or 4 for log out:");
+                Console.WriteLine("Choose 1 for Login Or 2 for Admin Or 3 for  User  or 4 for log out:");
                 string choice = Console.ReadLine();
                 switch (choice)
                 {
@@ -157,7 +158,10 @@ namespace BasicLibrary
                 Console.WriteLine("\n A- Add New Book");
                 Console.WriteLine("\n B- Display All Books");
                 Console.WriteLine("\n C- Search for Book by Name");
-                Console.WriteLine("\n D- Save and Exit");
+                Console.WriteLine("\n D- Edit the books");
+                Console.WriteLine("\n E- Remove the books");
+                Console.WriteLine("\n F- Display static");
+                Console.WriteLine("\n G- Save and Exit");
 
                 string choice = Console.ReadLine();
 
@@ -166,7 +170,7 @@ namespace BasicLibrary
                     case "A":
                         AddnNewBook();
                         break;
-
+                           
                     case "B":
                         ViewAllBooks();
                         break;
@@ -176,6 +180,18 @@ namespace BasicLibrary
                         break;
 
                     case "D":
+                        EditBook();
+                        break;
+
+                    case "E":
+                        RemoveBook();
+                        break;
+
+                    case "F":
+                        DisplayStatic();
+                        break;
+
+                    case "G":
                         ExitFlag = true;
                         break;
 
@@ -290,6 +306,67 @@ namespace BasicLibrary
                 sb.Clear();
 
             }
+        }
+
+        static void EditBook()
+        {
+
+            Console.WriteLine("Enter the name of the book you want to edit: ");
+            string name = Console.ReadLine(); // Book name to search
+
+            bool flag = false;
+
+            // Loop to find the book by name
+            for (int i = 0; i < Books.Count; i++)
+            {
+                if (Books[i].BName == name)
+                {
+                    Console.WriteLine("Book found!");
+                    Console.WriteLine("Book Author is : " + Books[i].BAuthor);
+
+                    // Ask for new book details
+                    Console.WriteLine("Edit the book name: ");
+                    string NewBook = Console.ReadLine();
+
+                    Console.WriteLine("Edit the book Author name:  ");
+                    string NewAuthor = Console.ReadLine();
+
+                    Console.WriteLine("How many books you want to add or remove (use negative value to remove):");
+                    int qu = int.Parse(Console.ReadLine()); // Quantity user wants to modify
+                    int newQuantity = Books[i].quantity + qu; // Modify the current quantity
+
+                    // Ensure that quantity doesn't go below zero
+                    if (newQuantity < 0)
+                    {
+                        Console.WriteLine("Error: Not enough books in stock to remove that quantity.");
+                        return;
+                    }
+
+                    // Update the book details
+                    Books[i] = (NewBook, NewAuthor, Books[i].BID, newQuantity);
+                    Console.WriteLine($"You have successfully updated the book '{name}'. New quantity: {newQuantity}");
+
+                    flag = true;
+                    break;
+                }
+            }
+
+            if (!flag)
+            {
+                Console.WriteLine("Book not found.");
+            }
+
+
+        }
+
+        static void RemoveBook()
+        {
+
+        }
+
+        static void DisplayStatic()
+        {
+
         }
 
         static void SearchForBook()
