@@ -7,6 +7,9 @@ namespace BasicLibrary
     {
         static List<(string BName, string BAuthor, int ID , int quantity)> Books = new List<(string BName, string BAuthor, int ID , int quntity)>();
         static string filePath = "C:\\Users\\Codeline User\\Desktop\\lib.txt";
+        static string UserPath = "C:\\Users\\Codeline User\\Desktop\\Admin.txt";
+        static string AdminPath = "C:\\Users\\Codeline User\\Desktop\\User.txt";
+        static string AdminPath = "C:\\Users\\Codeline User\\Desktop\\Borrowing.txt";
         // testing chuckout
         static void Main(string[] args)
         {
