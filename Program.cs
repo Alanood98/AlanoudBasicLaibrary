@@ -47,7 +47,19 @@ namespace BasicLibrary
                         break;
 
                     case "4":
-                        SaveBooksToFile();
+                        SaveBooksToPathFile();
+                        ExitFlag = true;
+                        break;
+                    case "5":
+                        SaveBooksToAdminFile();
+                        ExitFlag = true;
+                        break;
+                    case "6":
+                        SaveBooksToUserFile();
+                        ExitFlag = true;
+                        break;
+                    case "7":
+                        SaveBooksToBorrowingFile();
                         ExitFlag = true;
                         break;
 
@@ -404,7 +416,7 @@ namespace BasicLibrary
 
         static void SearchForBook()
         {
-            Console.WriteLine("Enter the book name you want");
+            Console.WriteLine("Enter the book name you want:");
             string name = Console.ReadLine();
             bool flag = false;
 
@@ -412,14 +424,18 @@ namespace BasicLibrary
             {
                 if (Books[i].BName == name)
                 {
-                    Console.WriteLine("Book Author is : " + Books[i].BAuthor);
+                    Console.WriteLine("Book found!");
+                    Console.WriteLine("Book Author: " + Books[i].BAuthor);
+                    Console.WriteLine("Available Quantity: " + Books[i].quantity); // Show available quantity
                     flag = true;
                     break;
                 }
             }
 
-            if (flag != true)
-            { Console.WriteLine("book not found"); }
+            if (!flag)
+            {
+                Console.WriteLine("Book not found.");
+            }
         }
 
 
@@ -595,7 +611,7 @@ namespace BasicLibrary
 
 
 
-        static void SaveBooksToFile()
+        static void SaveBooksToPathFile()
         {
             try
             {
@@ -614,5 +630,47 @@ namespace BasicLibrary
             }
         }
 
+        static void SaveBooksToAdminFile()
+        {
+            try
+            {
+                using (StreamWriter writer = new StreamWriter(AdminPath))
+                {
+                    foreach (var book in Books)
+                    {
+                        writer.WriteLine($"{book.BName}|{book.BAuthor}|{book.BID}");
+                    }
+                }
+                Console.WriteLine("Books saved to file successfully.");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error saving to file: {ex.Message}");
+            }
+        }
+
+        static void SaveBooksToUserFile()
+        {
+            try
+            {
+                using (StreamWriter writer = new StreamWriter(AdminPath))
+                {
+                    foreach (var book in Books)
+                    {
+                        writer.WriteLine($"{book.BName}|{book.BAuthor}|{book.BID}");
+                    }
+                }
+                Console.WriteLine("Books saved to file successfully.");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error saving to file: {ex.Message}");
+            }
+        }
+
+        static void SaveBooksToBorrowingFile()
+        {
+
+        }
     }
 }
