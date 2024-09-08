@@ -2,6 +2,7 @@
 using System.Text;
 using System.Xml.Linq;
 using static System.Reflection.Metadata.BlobBuilder;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace BasicLibrary
 {
@@ -425,11 +426,38 @@ namespace BasicLibrary
             {
                 Console.WriteLine("Book not found.");
             }
-
         }
 
                 static void DisplayStatic()
-        {
+        {// Calculate and display the total number of books in the library
+            int totalBooks = 0;
+            for (int i = 0; i < Books.Count; i++)
+            {
+                totalBooks += Books[i].quantity;
+            }
+            Console.WriteLine("Total books in the library: " + totalBooks);
+            Console.WriteLine();
+
+            // Display the number of users borrowing each book along with the author name
+            for (int i = 0; i < Books.Count; i++)
+            {
+                int bookId = Books[i].BID;
+                int usersBorrowing = 0;
+
+                // Count how many users are borrowing this book
+                for (int j = 0; j < Borrowing.Count; j++)
+                {
+                    if (Borrowing[j].BID == bookId)
+                    {
+                        usersBorrowing++;
+                    }
+                }
+
+                Console.WriteLine("Book Name: " + Books[i].BName);
+                Console.WriteLine("Author Name: " + Books[i].BAuthor);  // Display author name
+                Console.WriteLine("Number of users borrowing this book: " + usersBorrowing);
+                Console.WriteLine();
+            }
 
         }
 
@@ -459,40 +487,53 @@ namespace BasicLibrary
 
 
         static void BorrowBook()
-        {
-            Console.WriteLine("Enter the name of the book you want to borrow:");
-            string name = Console.ReadLine();
-            bool flag = false;
+        {    // Set a default user ID
+            int defaultUserId = 1;  // Change this value as needed
 
+            Console.WriteLine("User ID: " + defaultUserId);
+
+            Console.WriteLine("Enter the Book name you want to borrow:");
+            string bookName = Console.ReadLine();  // Changed to string
+
+            Console.WriteLine("Enter the Author name:");
+            string authorName = Console.ReadLine();  // this for to comare if there is books with same titel 
+
+            Console.WriteLine("Enter the quantity you want to borrow:");
+            int quantityToBorrow = int.Parse(Console.ReadLine());
+
+            // Find the book by Book name and Author
+            bool bookFound = false;
             for (int i = 0; i < Books.Count; i++)
             {
-                if (Books[i].BName == name)
+                if (Books[i].BName == bookName && Books[i].BAuthor == authorName)  // Check both name and author
                 {
-                    Console.WriteLine("Book Author is : " + Books[i].BAuthor);
-                    Console.WriteLine("how manay book you want:");
-                    int qu = int.Parse(Console.ReadLine());
-                    int x = Books[i].quantity - qu;
-                    Books[i] = (Books[i].BName, Books[i].BAuthor, Books[i].BID, x);
-                    Console.WriteLine($"You have successfully borrowed '{name}'.");
-                    return;
-                    flag = true;
+                    if (Books[i].quantity >= quantityToBorrow)
+                    {
+                        // Decrease the quantity of the book in stock
+                        Books[i] = (Books[i].BName, Books[i].BAuthor, Books[i].BID, Books[i].quantity - quantityToBorrow);
+
+                        // Add to borrowing list (defaultUserId, bookId)
+                        for (int j = 0; j < quantityToBorrow; j++)
+                        {
+                            Borrowing.Add((defaultUserId, Books[i].BID));  // Use Books[i].BID
+                        }
+
+                        Console.WriteLine("Book(s) borrowed successfully!");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Sorry, insufficient quantity in stock.");
+                    }
+
+                    bookFound = true;
                     break;
                 }
             }
-            //    for (int i = 0; i < Books.Count; i++)
-            //    {
-            //        if (Books[i].quantity!=0)
-            //        {
-            //            Console.WriteLine("how manay book you want:");
-            //            int qu =int.Parse(Console.ReadLine());
-            //            int x = Books[i].quantity - qu; // Increase the number of available books
-            //            Books[i] = (Books[i].BName, Books[i].BAuthor, Books[i].ID, x);
-            //            Console.WriteLine($"You have successfully returned '{bookName}'.");
-            //            return;
-            //        }
-            //      //  .Equals(bookName, StringComparison.OrdinalIgnoreCase)
-            //    }
-            //    Console.WriteLine("Book not found.");
+
+            if (!bookFound)
+            {
+                Console.WriteLine("Book not found or incorrect author.");
+            }
         }
 
         static void ReturnBooks()
