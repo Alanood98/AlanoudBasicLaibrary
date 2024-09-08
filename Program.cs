@@ -361,10 +361,43 @@ namespace BasicLibrary
 
         static void RemoveBook()
         {
+            Console.WriteLine("Enter the name of the book you want to remove: ");
+            string name = Console.ReadLine(); // Book name to search
+
+            bool flag = false;
+
+            // Loop to find the book by name
+            for (int i = 0; i < Books.Count; i++)
+            {
+                if (Books[i].BName == name)
+                {
+                    Console.WriteLine("Book found!");
+                    Console.WriteLine("Book Author is : " + Books[i].BAuthor);
+                    Console.WriteLine("Are you sure you want to remove this book? (Y/N)");
+                    string confirm = Console.ReadLine().ToUpper();
+
+                    if (confirm == "Y")
+                    {
+                        Books.RemoveAt(i); // Remove the book from the list
+                        Console.WriteLine($"The book '{name}' has been removed successfully.");
+                        flag = true;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Book removal cancelled.");
+                    }
+                    break; // Exit the loop once the book is found and processed
+                }
+            }
+
+            if (!flag)
+            {
+                Console.WriteLine("Book not found.");
+            }
 
         }
 
-        static void DisplayStatic()
+                static void DisplayStatic()
         {
 
         }
