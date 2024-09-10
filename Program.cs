@@ -11,12 +11,14 @@ namespace BasicLibrary
         static List<(string BName, string BAuthor, int BID, int quantity, int copies,string catogery, int BperiodDayes)> Books = new List<(string BName, string BAuthor, int BID, int quantity, int copies, string catogery, int BperiodDayes)>();
         static List<(string AdEmail, int password)> Admin = new List<(string AdEmail, int password)>();
         static List<(string UrEmail, int password, int UrId)> User = new List<(string UrEmail, int password, int UrId)>();
+        static List<(int catgId, string catograyName, int numOfBookInEachCatogary)> Catogry = new List<(int catgId, string catograyName, int numOfBookInEachCatogary)>();
         // A boolean flag indicating whether the borrowed book has been returned (true for returned, false for not returned).
         static List<(int UrId, int BID,int dateOfBorrow,  int dateOfReturn, int actualReturnDate,int rating, bool IsReturned)> Borrowing = new List<(int UrId, int BID, int dateOfBorrow, int dateOfReturn, int actualReturnDate, int rating, bool IsReturned)>();
         static string filePath = "C:\\Users\\Codeline User\\Desktop\\lib.txt";
         static string AdminPath = "C:\\Users\\Codeline User\\Desktop\\Admin.txt";
         static string UserPath = "C:\\Users\\Codeline User\\Desktop\\User.txt";
         static string BorrowingPath = "C:\\Users\\Codeline User\\Desktop\\Borrowing.txt";
+        static string CatogryPath = "C:\\Users\\Codeline User\\Desktop\\Catogry.txt";
         // testing chuckout
         static void Main(string[] args)
         {
