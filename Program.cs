@@ -12,7 +12,7 @@ namespace BasicLibrary
         static List<(string AdEmail, int password)> Admin = new List<(string AdEmail, int password)>();
         static List<(string UrEmail, int password, int UrId)> User = new List<(string UrEmail, int password, int UrId)>();
         // A boolean flag indicating whether the borrowed book has been returned (true for returned, false for not returned).
-        static List<(int UrId, int BID, bool Returned)> Borrowing = new List<(int UrId, int BID, bool Returned)>();
+        static List<(int UrId, int BID,int dateOfBorrow,  int dateOfReturn, int actualReturnDate,int rating, bool IsReturned)> Borrowing = new List<(int UrId, int BID, int dateOfBorrow, int dateOfReturn, int actualReturnDate, int rating, bool IsReturned)>();
         static string filePath = "C:\\Users\\Codeline User\\Desktop\\lib.txt";
         static string AdminPath = "C:\\Users\\Codeline User\\Desktop\\Admin.txt";
         static string UserPath = "C:\\Users\\Codeline User\\Desktop\\User.txt";
@@ -383,6 +383,16 @@ namespace BasicLibrary
                     Console.WriteLine("Edit the book Author name:  ");
                     string NewAuthor = Console.ReadLine();
 
+                    Console.WriteLine("Edit the book Author name:  ");
+                    int NewBookCopies = int.Parse(Console.ReadLine());
+
+                    Console.WriteLine("Edit the book Author name:  ");
+                    string NewbookCatogry = Console.ReadLine();
+
+                    Console.WriteLine("Edit the book Author name:  ");
+                    int NewBookPeriod = int.Parse(Console.ReadLine());
+
+
                     Console.WriteLine("Enter how many books you want:");
                     int qu = int.Parse(Console.ReadLine()); // Quantity admin wants to modify
                     int newQuantity = Books[i].quantity + qu; // Modify the current quantity
@@ -394,9 +404,10 @@ namespace BasicLibrary
                         return;
                     }
 
-                    // Update the book details
-                    Books[i] = (NewBook, NewAuthor, Books[i].BID, newQuantity);
-                    Console.WriteLine($"You have successfully updated the book '{name}'. New quantity: {newQuantity}");
+                    // Update the book details with the new fields
+                    Books[i] = (NewBook, NewAuthor, Books[i].BID, newQuantity, NewBookCopies, NewbookCatogry, NewBookPeriod);
+
+                    Console.WriteLine($"You have successfully updated the book '{NewBook}'. New quantity: {newQuantity}, Copies: {NewBookCopies}, Category: {NewbookCatogry}, Loan Period: {NewBookPeriod} days."); ;
 
                     flag = true;
                     break;
@@ -606,7 +617,7 @@ namespace BasicLibrary
                         if (Books[i].quantity >= quantityToBorrow)
                         {
                             // Decrease the quantity of the book in stock
-                            Books[i] = (Books[i].BName, Books[i].BAuthor, Books[i].BID, Books[i].quantity - quantityToBorrow);
+                            Books[i] = (Books[i].BName, Books[i].BAuthor, Books[i].BID, Books[i].quantity - quantityToBorrow, Books[i].copies, Books[i].catogery, Books[i].BperiodDayes);
 
                             // Add to borrowing list (defaultUserId, bookId, false for not returned)
                             for (int j = 0; j < quantityToBorrow; j++)
