@@ -318,7 +318,17 @@ namespace BasicLibrary
             Console.WriteLine("Enter Book quantity");
             int qnt = int.Parse(Console.ReadLine());
 
-            Books.Add((name, author, ID, qnt));
+            Console.WriteLine("Enter how many copies we have : ");
+            int bookCopies = int.Parse(Console.ReadLine());
+
+            Console.WriteLine("Enter Book catogry: ");
+            string bookCatogry = Console.ReadLine();
+
+            Console.WriteLine("Enter Book period dayes: ");
+            int bookPeriodDayes = int.Parse(Console.ReadLine());
+
+
+            Books.Add((name, author, ID, qnt , bookCopies, bookCatogry, bookPeriodDayes));
             Console.WriteLine("Book Added Succefully");
 
         }
@@ -339,6 +349,10 @@ namespace BasicLibrary
                 sb.Append("Book ").Append(BookNumber).Append(" ID : ").Append(Books[i].BID);
                 sb.AppendLine().AppendLine();
                 sb.Append("Book ").Append(BookNumber).Append(" Quantity : ").Append(Books[i].quantity);
+                sb.AppendLine().AppendLine();
+                sb.Append("Book ").Append(BookNumber).Append(" bookCopies : ").Append(Books[i].copies);
+                sb.AppendLine().AppendLine();
+                sb.Append("Book ").Append(BookNumber).Append(" catogry : ").Append(Books[i].catogery);
                 sb.AppendLine().AppendLine();
                 Console.WriteLine(sb.ToString());
                 sb.Clear();
