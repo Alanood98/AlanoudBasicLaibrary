@@ -468,7 +468,7 @@ namespace BasicLibrary
             {
                 foreach (var book in Books)
                 {
-                    writer.WriteLine($"{book.BID},{book.BName},{book.BAuthor},{book.BorrowedCopies},{book.copies},{book.catogery},{book.BperiodDayes},{book.price}");
+                    writer.WriteLine($"{book.BID}|  {book.BName}|  {book.BAuthor}|  {book.BorrowedCopies}|  {book.copies}|  {book.catogery}|  {book.BperiodDayes}|  {book.price}");
                 }
             }
 
@@ -476,14 +476,14 @@ namespace BasicLibrary
             {
                 foreach (var admin in Admin)
                 {
-                    writer.WriteLine($"{admin.AID},{admin.admin_name}{admin.AdEmail},{admin.password}");
+                    writer.WriteLine($"{admin.AID}|  {admin.admin_name}|  {admin.AdEmail}|  {admin.password}");
                 }
             }
             using (var writer = new StreamWriter(UserPath))
             {
                 foreach (var user in User)
                 {
-                    writer.WriteLine($"{user.UrId},{user.user_name},{user.UrEmail},{user.password}");
+                    writer.WriteLine($"{user.UrId}|  {user.user_name}|  {user.UrEmail}|  {user.password}");
                 }
             }
 
@@ -491,14 +491,14 @@ namespace BasicLibrary
             {
                 foreach (var borrowing in Borrowing)
                 {
-                    writer.WriteLine($"{borrowing.UrId},{borrowing.BID},{borrowing.dateOfBorrow},{borrowing.dateOfReturn},{borrowing.actualReturnDate},{borrowing.rating},{borrowing.IsReturned}");
+                    writer.WriteLine($"{borrowing.UrId}|  {borrowing.BID}|  {borrowing.dateOfBorrow}|  {borrowing.dateOfReturn}|  {borrowing.actualReturnDate}|  {borrowing.rating}|  {borrowing.IsReturned}");
                 }
             }
             using (var writer = new StreamWriter(CatogryPath))
             {
                 foreach (var category in Catogary)
                 {
-                    writer.WriteLine($"{category.catgId},{category.catograyName},{category.numOfBookInEachCatogary}");
+                    writer.WriteLine($"{category.catgId}|  {category.catograyName}|  {category.numOfBookInEachCatogary}");
                 }
             }
 
@@ -876,7 +876,7 @@ namespace BasicLibrary
 
             bool adminFound = false;
 
-            // Check tuple first
+            // Check tuple for existing admin by email and password
             foreach (var admin in Admin)
             {
                 if (admin.AdEmail.Trim().ToLower() == email.ToLower() && admin.password == password)
@@ -923,10 +923,9 @@ namespace BasicLibrary
             }
         }
 
-
         static void RegisterAdmin(string email, string password, string name)
         {
-            // Step 1: Check for duplicate emails tuple
+            // Step 1: Check for duplicate names and emails in the tuple
             foreach (var admin in Admin)
             {
                 if (admin.AdEmail.Trim().ToLower() == email.Trim().ToLower())
@@ -934,9 +933,14 @@ namespace BasicLibrary
                     Console.WriteLine("Admin email already exists.");
                     return;
                 }
+                if (admin.admin_name.Trim().ToLower() == name.Trim().ToLower())
+                {
+                    Console.WriteLine("Admin name already exists.");
+                    return;
+                }
             }
 
-            // Step 2: Check if the admin email already exists in the file
+            // Step 2: Check for duplicate names and emails in the file
             if (File.Exists(AdminPath))
             {
                 foreach (var line in File.ReadLines(AdminPath))
@@ -945,9 +949,15 @@ namespace BasicLibrary
                     if (parts.Length == 4)
                     {
                         string fileEmail = parts[2].Trim();
+                        string fileName = parts[1].Trim();
                         if (fileEmail.ToLower() == email.Trim().ToLower())
                         {
                             Console.WriteLine("Admin email already exists.");
+                            return;
+                        }
+                        if (fileName.ToLower() == name.Trim().ToLower())
+                        {
+                            Console.WriteLine("Admin name already exists.");
                             return;
                         }
                     }
